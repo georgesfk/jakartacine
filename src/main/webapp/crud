@@ -1,0 +1,116 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.demo4.model.entity.Acteur" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CRUD</title>
+</head>
+<script type="text/javascript">
+    function showActorForm() {
+        var select = document.getElementById("selectActeur");
+        var form = document.getElementById("actorForm");
+
+        // Get selected option
+        var selectedOption = select.options[select.selectedIndex];
+
+        // If an actor is selected, fill the form with the actor's data
+        if (select.value) {
+            form.style.display = "block";
+            document.getElementById("actorId").value = select.value;
+            document.getElementById("actorNom").value = selectedOption.getAttribute("data-nom");
+            document.getElementById("actorPrenom").value = selectedOption.getAttribute("data-prenom");
+            document.getElementById("actorPhoto").value = selectedOption.getAttribute("data-photo");
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
+<body>
+<%
+    Boolean AddActSuccess = (Boolean) request.getAttribute("AddActSuccess");
+    Boolean UpdateActSuccess = (Boolean) request.getAttribute("UpdateActSuccess");
+    Boolean DeleteActSuccess = (Boolean) request.getAttribute("DeleteActSuccess");
+    List<Acteur> acteurs = (List<Acteur>) request.getAttribute("ListActeurs");
+%>
+<h1>CRUD</h1>
+<div style="border: 1px solid black; margin: auto; padding: 5px;">
+    <h2>Create Acteurs</h2>
+
+    <% if (AddActSuccess != null) {%>
+    <% if (AddActSuccess) {%>
+    <p style="color: green"> Acteur ajout reussi </p>
+    <% } else { %>
+    <p style="color: red"> Acteur ajout fail </p>
+    <% } %>
+    <% } else { %>
+    <p> </p>
+    <% } %>
+
+    <form action="creaActeur" method="post">
+        <label for="nom">Nom : </label><br>
+        <input type="text" id="nom" name="nom">
+        <br>
+        <label for="prenom">Prenom :</label><br>
+        <input type="text" id="prenom" name="prenom">
+        <br>
+        <label for="photo">Photo :</label><br>
+        <input type="text" id="photo" name="photo">
+        <br><br>
+        <input type="submit" value="CREER">
+    </form>
+</div>
+<div style="border: 1px solid black; margin: auto; padding: 5px;">
+    <h2>Update & Delete : Acteurs</h2>
+
+    <% if (UpdateActSuccess != null) {%>
+    <% if (UpdateActSuccess) {%>
+    <p style="color: green"> Modif Acteur reussi </p>
+    <% } else { %>
+    <p style="color: red"> Modif Acteur fail </p>
+    <% } %>
+    <% } else { %>
+    <p> </p>
+    <% } %>
+    <% if (DeleteActSuccess != null) {%>
+    <% if (DeleteActSuccess) {%>
+    <p style="color: green"> Suppression Acteur reussi </p>
+    <% } else { %>
+    <p style="color: red"> Suppression Acteur fail </p>
+    <% } %>
+    <% } else { %>
+    <p> </p>
+    <% } %>
+
+    <% if (acteurs != null) {%>
+    <select name="acteur" id="selectActeur" onchange="showActorForm()">
+        <option value="">--Please choose an option--</option>
+        <% for (Acteur acteur : acteurs) { %>
+        <option value="<%= acteur.getId() %>"  data-nom="<%= acteur.getNom()%>" data-prenom="<%= acteur.getPrenom() %>" data-photo="<%= acteur.getPhoto()%>">
+            <%= acteur.getNom() %> <%= acteur.getPrenom() %>
+        </option>
+        <% } %>
+    </select>
+    <% } else { %>
+    <p> Liste d'acteurs vide</p>
+    <% } %>
+
+    <form id="actorForm" style="display:none;" method="post" action="updateActeur">
+        <input type="hidden" id="actorId" name="id" />
+        <label for="actorNom">Nom:</label><br>
+        <input type="text" id="actorNom" name="nom" />
+        <br>
+        <label for="actorPrenom">Prenom:</label><br>
+        <input type="text" id="actorPrenom" name="prenom" />
+        <br>
+        <label for="actorPhoto">Photo:</label><br>
+        <input type="text" id="actorPhoto" name="photo" />
+        <br><br>
+        <input type="submit" name="submit" value="Modifier" />
+        <input type="submit" name="submit" value="Supprimer" />
+    </form>
+
+</div>
+
+</body>
+</html>
