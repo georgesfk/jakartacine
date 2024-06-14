@@ -1,0 +1,51 @@
+package com.example.demo4;
+
+import com.example.demo4.model.ActeurDAO;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet("/acteur/*")
+public class RouteActeur extends HttpServlet {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+        String pinf = request.getPathInfo();
+        System.out.println(pinf);
+        String[] tpinf = pinf.split("/");
+        int size = tpinf.length;
+        System.out.println(size);
+        String action = tpinf[1];
+        System.out.println("action:"+action);
+        if (size > 2) {
+            String param1 = tpinf[2];
+            System.out.println("param1:"+param1);
+        }
+        ActeurDAO acteurDao = new ActeurDAO();
+        switch (action) {
+            case "list": {
+                List acteurs = acteurDao.getActeurs();
+                request.setAttribute("acteurs",acteurs) ;
+                RequestDispatcher dispatch = request.getRequestDispatcher("/listeacteurs.jsp");
+                dispatch.forward ( request, response ) ;
+            }
+            case "add": {
+
+            }
+            case "getone": {
+
+            }
+            case "modif": {
+
+            }
+        }
+    }
+    public void destroy () {}
+
+    }
+
