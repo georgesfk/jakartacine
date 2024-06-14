@@ -1,0 +1,47 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Add Acteur</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/add-student-style.css">
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+        <h2>Cinema</h2>
+    </div>
+</div>
+<div id="container">
+    <h3>Add Acteur</h3>
+    <form action="addActeur" method="post">
+
+        <table>
+            <tbody>
+            <tr>
+                <td><label> Nom:</label></td>
+                <td><input type="text" name="nom"></td>
+            </tr>
+            <tr>
+                <td><label>Prenom:</label></td>
+                <td><input type="text" name="prenom"></td>
+            </tr>
+            <tr>
+                <td><label>Photo</label></td>
+                <td><input type="text" name="photo"></td>
+            </tr>
+            <tr>
+                <td><label></label></td>
+                <td><input type="submit" value="Save" class="save"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div style="clear: both;"></div>
+
+</div>
+
+</head>
+</body>
+</html>
+
+
